@@ -1,10 +1,10 @@
 package com.example.demo.Service;
 
 
-import cn.hutool.db.PageResult;
 import com.example.demo.DTO.request.CreateQuestionRequest;
 import com.example.demo.DTO.request.QuestionQueryRequest;
 import com.example.demo.DTO.request.UpdateQuestionRequest;
+import com.example.demo.DTO.response.PageResult;
 import com.example.demo.DTO.response.QuestionVO;
 
 import java.util.List;

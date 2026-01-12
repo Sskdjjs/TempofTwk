@@ -1,11 +1,11 @@
 package com.example.demo.Controller;
 
 
-import cn.hutool.db.PageResult;
 import com.example.demo.DTO.request.CreateQuestionRequest;
 import com.example.demo.DTO.request.QuestionQueryRequest;
 import com.example.demo.DTO.request.UpdateQuestionRequest;
 import com.example.demo.DTO.response.ApiResponse;
+import com.example.demo.DTO.response.PageResult;
 import com.example.demo.DTO.response.QuestionVO;
 import com.example.demo.Service.QuestionService;
 import io.swagger.v3.oas.annotations.Operation;

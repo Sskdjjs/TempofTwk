@@ -2,13 +2,13 @@ package com.example.demo.Service.Impl;
 
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.db.PageResult;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import com.example.demo.DTO.request.CreateQuestionRequest;
 import com.example.demo.DTO.request.QuestionQueryRequest;
 import com.example.demo.DTO.request.UpdateQuestionRequest;
+import com.example.demo.DTO.response.PageResult;
 import com.example.demo.DTO.response.QuestionVO;
 import com.example.demo.DTO.response.TagVO;
 import com.example.demo.DTO.response.UserSimpleVO;
@@ -30,7 +30,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -230,8 +229,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public PageResult<QuestionVO> queryQuestions(QuestionQueryRequest request) {
-        log.info("查询问题列表: page={}, size={}, keyword={}",
-                request.getPage(), request.getSize(), request.getKeyword());
+        log.info("查询问题列表");
 
         // 1. 构建查询条件
         QueryWrapper<Question> wrapper = new QueryWrapper<>();
@@ -242,9 +240,25 @@ public class QuestionServiceImpl implements QuestionService {
         }
 
         if (request.getKeyword() != null && !request.getKeyword().trim().isEmpty()) {
+
             wrapper.and(w -> w.like("title", request.getKeyword())
                     .or()
                     .like("content", request.getKeyword()));
+
+//            // 先去掉关键词两边的空格
+//            String keyword = request.getKeyword().trim();
+//
+//            // 创建子查询条件
+//            QueryWrapper<Question> subWrapper = new QueryWrapper<>();
+//
+//            // 标题包含关键词
+//            subWrapper.like("title", keyword);
+//
+//            // 或者 内容包含关键词
+//            subWrapper.or().like("content", keyword);
+//
+//            // 把这个子条件添加到主查询中
+//            wrapper.and(subWrapper);
         }
 
         // 2. 排序
@@ -261,22 +275,23 @@ public class QuestionServiceImpl implements QuestionService {
         Page<Question> page = new Page<>(request.getPage(), request.getSize());
         Page<Question> questionPage = questionMapper.selectPage(page, wrapper);
 
-        // 4. 转换为VO列表
-        List<QuestionVO> questionVOs = questionPage.getRecords().stream()
-                .map(this::convertToVO)
-                .toList();
+        // 4. 转换为VO列表（新手写法）
+        List<Question> questions = questionPage.getRecords();  // 获取查询结果
+        List<QuestionVO> questionVOs = new ArrayList<>();      // 创建空列表
+
+        // 遍历每个问题并转换
+        for (Question question : questions) {
+            QuestionVO vo = convertToVO(question);
+            questionVOs.add(vo);
+        }
 
         // 5. 返回分页结果
-//        return new PageResult<>(
-//                questionVOs,
-//                questionPage.getCurrent(),
-//                questionPage.getSize(),
-//                questionPage.getTotal()
-//        );
-        /**
-         * 暂时不写
-         */
-        return new PageResult<>();
+        return new PageResult<>(
+                questionVOs,
+                questionPage.getCurrent(),
+                questionPage.getSize(),
+                questionPage.getTotal()
+        );
     }
 
     @Override
