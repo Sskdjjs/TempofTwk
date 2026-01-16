@@ -2,6 +2,8 @@ package com.example.demo.interceptor;
 
 
 import com.example.demo.utils.JwtUtil;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -70,7 +72,6 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
         }
 
         String token = authHeader.substring(7); // 去掉"Bearer "前缀
-
         try {
             // 验证Token
             if (!jwtUtil.validateToken(token)) {

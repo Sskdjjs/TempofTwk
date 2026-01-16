@@ -6,6 +6,7 @@ import com.example.demo.DTO.request.QuestionQueryRequest;
 import com.example.demo.DTO.request.UpdateQuestionRequest;
 import com.example.demo.DTO.response.PageResult;
 import com.example.demo.DTO.response.QuestionVO;
+import com.example.demo.entity.Question;
 
 import java.util.List;
 
@@ -30,5 +31,5 @@ public interface QuestionService {
     PageResult<QuestionVO> queryQuestions(QuestionQueryRequest request);
 
     // 获取用户的问题列表
-    PageResult<QuestionVO> getUserQuestions(Long userId, Integer page, Integer size);
+    PageResult<Question> getUserQuestions(Long userId, Integer page, Integer size);
 }

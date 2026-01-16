@@ -12,6 +12,7 @@ import com.example.demo.Service.UserService;
 import com.example.demo.entity.User;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.utils.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -99,6 +100,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements Use
             throw new RuntimeException("用户不存在");
         }
         return convertToVO(user);
+    }
+
+    @Override
+    public Long getCurrentUserId(HttpServletRequest request) {
+        return null;
     }
 
     /**

@@ -2,6 +2,7 @@ package com.example.demo.Service.Impl;
 
 
 import cn.hutool.core.bean.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
@@ -295,8 +296,25 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public PageResult<QuestionVO> getUserQuestions(Long userId, Integer page, Integer size) {
-        return null;
+    public PageResult<Question> getUserQuestions(Long userId, Integer page, Integer size) {
+//        QueryWrapper<QuestionVO> wrapper = new QueryWrapper<>();
+//        wrapper.eq("status",1);
+//        if (userId != null) {
+//            wrapper.eq("user_id",userId);
+//        }
+        LambdaQueryWrapper<Question> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Question::getUserId,userId)
+                .eq(Question::getStatus,1);
+        Page<Question> page1 = new Page<>(page,size);
+        Page<Question> questionPage = questionMapper.selectPage(page1,lambdaQueryWrapper);
+        List<Question> questions = questionPage.getRecords();
+        return new PageResult<>(
+                questions,
+                questionPage.getCurrent(),
+                questionPage.getSize(),
+                questionPage.getTotal()
+        );
+//        return null;
     }
 
     @Override

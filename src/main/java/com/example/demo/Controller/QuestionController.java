@@ -8,6 +8,7 @@ import com.example.demo.DTO.response.ApiResponse;
 import com.example.demo.DTO.response.PageResult;
 import com.example.demo.DTO.response.QuestionVO;
 import com.example.demo.Service.QuestionService;
+import com.example.demo.entity.Question;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -151,7 +152,7 @@ public class QuestionController {
      */
     @GetMapping("/user/{userId}")
     @Operation(summary = "获取用户的问题列表")
-    public ApiResponse<PageResult<QuestionVO>> getUserQuestions(
+    public ApiResponse<PageResult<Question>> getUserQuestions(
             @PathVariable Long userId,
             @RequestParam(defaultValue = "1") Integer page,
             @RequestParam(defaultValue = "20") Integer size) {
@@ -159,7 +160,7 @@ public class QuestionController {
         log.info("获取用户问题列表: userId={}", userId);
 
         try {
-            PageResult<QuestionVO> result = questionService.getUserQuestions(userId, page, size);
+            PageResult<Question> result = questionService.getUserQuestions(userId, page, size);
             return ApiResponse.success(result);
         } catch (Exception e) {
             log.error("获取用户问题列表失败: {}", e.getMessage());

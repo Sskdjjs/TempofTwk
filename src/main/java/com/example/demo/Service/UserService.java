@@ -7,6 +7,7 @@ import com.example.demo.DTO.request.LoginRequest;
 import com.example.demo.DTO.response.LoginResponse;
 import com.example.demo.DTO.request.RegisterRequest;
 import com.example.demo.DTO.UserVO;
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface UserService {
 
@@ -27,4 +28,6 @@ public interface UserService {
      * 根据用户名获取用户信息
      */
     UserVO getUserByUsername(String username);
+
+    Long getCurrentUserId(HttpServletRequest request);
 }
