@@ -27,8 +27,8 @@ public class AnswerController {
                                               HttpServletRequest request) {
         Long userId = (Long) request.getAttribute("userId");
 //        Long userId = userService.getCurrentUserId(request);
-        Answer answer = answerService.createAnswer(questionId, userId, dto.getContent());
-        return ApiResponse.success(convertToVO(answer, userId));
+        AnswerVO answerVO = answerService.createAnswer(questionId, userId, dto.getContent());
+        return ApiResponse.success(answerVO);
     }
 
     @GetMapping("/question/{questionId}")

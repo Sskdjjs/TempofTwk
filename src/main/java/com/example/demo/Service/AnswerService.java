@@ -13,7 +13,7 @@ public interface AnswerService {
 
 
     // 创建回答
-    public Answer createAnswer(Long questionId, Long userId, String content) ;
+    AnswerVO createAnswer(Long questionId, Long userId, String content) ;
 
     // 获取问题回答列表
      List<AnswerVO> getAnswersByQuestionId(Long questionId, Long currentUserId);
