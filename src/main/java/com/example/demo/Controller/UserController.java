@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 //import javax.validation.Valid;
 import jakarta.validation.Valid;
+@CrossOrigin(origins = "*")  // 允许所有前端访问
 @Slf4j
 @Validated
 @RestController

@@ -1,0 +1,9 @@
+# application.yml
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/news
+    username: root
+    password: 1234

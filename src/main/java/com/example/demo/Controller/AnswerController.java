@@ -34,7 +34,7 @@ public class AnswerController {
     @GetMapping("/question/{questionId}")
     public ApiResponse<List<AnswerVO>> getAnswers(@PathVariable Long questionId,
                                                   HttpServletRequest request) {
-        Long userId = userService.getCurrentUserId(request);
+        Long userId = (Long) request.getAttribute("userId");
         List<AnswerVO> answers = answerService.getAnswersByQuestionId(questionId, userId);
         return ApiResponse.success(answers);
     }
@@ -42,7 +42,7 @@ public class AnswerController {
     @DeleteMapping("/{answerId}")
     public ApiResponse<Void> deleteAnswer(@PathVariable Long answerId,
                                           HttpServletRequest request) {
-        Long userId = userService.getCurrentUserId(request);
+        Long userId = (Long) request.getAttribute("userId");
         answerService.deleteAnswer(answerId, userId);
         return ApiResponse.success(null);
     }
