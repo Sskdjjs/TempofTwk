@@ -38,9 +38,9 @@ Thumbs.db
 *.sqlite
 
 # 配置文件（敏感信息不要上传！）
-application-dev.yml
-application-prod.yml
-*.properties
+#application-dev.yml
+#application-prod.yml
+#*.properties
 
 # Maven
 .mvn/wrapper/maven-wrapper.jar
