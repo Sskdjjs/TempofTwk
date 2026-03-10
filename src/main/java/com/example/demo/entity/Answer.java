@@ -28,4 +28,5 @@ public class Answer {
     private Boolean isDeleted = false;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private Boolean isHot;
 }

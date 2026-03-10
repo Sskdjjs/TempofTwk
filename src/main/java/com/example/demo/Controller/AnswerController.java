@@ -51,7 +51,7 @@ public class AnswerController {
     public ApiResponse<Void> voteAnswer(@PathVariable Long answerId,
                                         @Valid @RequestBody VoteDTO dto,
                                         HttpServletRequest request) {
-        Long userId = userService.getCurrentUserId(request);
+        Long userId = (Long) request.getAttribute("userId");
         answerService.voteAnswer(answerId, userId, dto.getVoteType());
         return ApiResponse.success(null);
     }

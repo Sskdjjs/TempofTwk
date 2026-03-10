@@ -3,7 +3,10 @@ package com.example.demo.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.demo.entity.AnswerVote;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.Map;
 
 @Mapper
 public interface AnswerVoteMapper extends BaseMapper<AnswerVote> {
@@ -12,4 +15,11 @@ public interface AnswerVoteMapper extends BaseMapper<AnswerVote> {
 
     @Select("SELECT COUNT(*) FROM answer_votes WHERE answer_id = #{answerId} AND vote_type = -1")
     Integer countDownvotes(Long answerId);
+
+    @Select("SELECT " +
+            "COUNT(CASE WHEN vote_type = 1 THEN 1 END) as up_count, " +
+            "COUNT(CASE WHEN vote_type = -1 THEN 1 END) as down_count " +
+            "FROM answer_votes " +
+            "WHERE answer_id = #{answerId}")
+    Map<String, Long> countVotesByAnswerId(@Param("answerId") Long answerId);
 }
